@@ -1,3 +1,0 @@
-ywc_common_remote_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: YWCCommonRemoteBundle:Default:index }
