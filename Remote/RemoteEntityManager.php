@@ -56,7 +56,7 @@ class RemoteEntityManager
 
         if(is_null($url)) {
             if(!isset($this->loaded[$type][$this->url][$id])) {        
-                $reflect = new \ReflectionClass('YWC\CommonBundle\Remote\Entity\\'.ucfirst($type));        
+                $reflect = new \ReflectionClass('YWC\RemoteBundle\Remote\Entity\\'.ucfirst($type));        
                 $this->loaded[$type][$this->url][$id] = $reflect->newInstanceArgs(array($this->url, $id));
             }
 
@@ -68,7 +68,7 @@ class RemoteEntityManager
     {
         $type = strtolower($type);
         $json = json_decode($json)->{$type.'s'};
-        $reflect = new \ReflectionClass('YWC\CommonBundle\Remote\Entity\\'.ucfirst($type));
+        $reflect = new \ReflectionClass('YWC\RemoteBundle\Remote\Entity\\'.ucfirst($type));
         foreach($json as $item) {
             if(!isset($this->loaded[$type][$this->url][$item->id])) {                
                 $item = (object) array($type => $item);
