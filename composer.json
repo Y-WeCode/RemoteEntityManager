@@ -1,5 +1,5 @@
 {
-    "name" : "ywc/common/remote-bundle",
+    "name" : "ywc/remote-bundle",
     "description" : "Remote Entity Manager",
     "type" : "symfony-bundle",
     "authors" : [{
@@ -24,7 +24,7 @@
     }],
     "extra" : {
     "branch-alias" : {
-            "dev-Remote" : "0.0.0-dev"
+            "dev-master" : "0.0.0-dev"
         }
     }
 }
