@@ -3,7 +3,7 @@
 namespace YWC\RemoteBundle\Remote\Entity;
 
 use YWC\API\AdminBundle\Entity\Client;
-use YWC\CommonBundle\Remote\Entity;
+use YWC\RemoteBundle\Remote\Entity;
 
 class Project extends Entity
 {

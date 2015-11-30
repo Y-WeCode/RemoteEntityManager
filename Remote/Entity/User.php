@@ -2,7 +2,7 @@
 
 namespace YWC\RemoteBundle\Remote\Entity;
 
-use YWC\CommonBundle\Remote\Entity;
+use YWC\RemoteBundle\Remote\Entity;
 
 class User extends Entity
 {
