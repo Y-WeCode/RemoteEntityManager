@@ -1,5 +1,5 @@
 services:
     ywc_common.remote_entity_manager:
-        class: YWC\CommonBundle\Remote\RemoteEntityManager
+        class: YWC\RemoteBundle\Remote\RemoteEntityManager
         arguments: [%ywc_core.api_url%, @doctrine.orm.default_entity_manager]
 

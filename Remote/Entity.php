@@ -1,6 +1,6 @@
 <?php
 
-namespace YWC\Common\RemoteBundle\Remote;
+namespace YWC\RemoteBundle\Remote;
 
 class Entity
 {

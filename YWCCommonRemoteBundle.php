@@ -1,6 +1,6 @@
 <?php
 
-namespace YWC\Common\RemoteBundle;
+namespace YWC\RemoteBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
