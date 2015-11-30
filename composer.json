@@ -1,0 +1,30 @@
+{
+    "name" : "ywc/common/remote-bundle",
+    "description" : "Remote Entity Manager",
+    "type" : "symfony-bundle",
+    "authors" : [{
+        "name" : "Raphaël Babel",
+        "email" : "rbabel@yes-we-code.fr"
+    }],
+    "keywords" : [
+        "remote entity manager"
+    ],
+    "license" : [
+        "Proprietary"
+    ],
+    "require" : {
+    },
+    "autoload" : {
+        "psr-4" : {
+            "YWC\\Common\\RemoteBundle\\" : ""
+        }
+    },
+    "target-dir" : "",
+    "repositories" : [{
+    }],
+    "extra" : {
+    "branch-alias" : {
+            "dev-master" : "0.0.0-dev"
+        }
+    }
+}
