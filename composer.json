@@ -16,7 +16,7 @@
     },
     "autoload" : {
         "psr-4" : {
-            "YWC\\Common\\RemoteBundle\\" : ""
+            "YWC\\RemoteBundle\\" : ""
         }
     },
     "target-dir" : "",
