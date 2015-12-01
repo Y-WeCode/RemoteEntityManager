@@ -15,7 +15,7 @@ class CacheCommand extends ContainerAwareCommand
 
     private function write($message, $verbosity = OutputInterface::VERBOSITY_NORMAL)
     {
-        if($this->out->getVerbosity >= $verbosity) $this->out->writeln($message);
+        if($this->out->getVerbosity() >= $verbosity) $this->out->writeln($message);
     }
         
     protected function configure()
@@ -30,7 +30,7 @@ class CacheCommand extends ContainerAwareCommand
             )
             ->addOption(
                 'delay',
-                'd',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 'Consider only cache entries older than delay (in seconds)',
                 86400
@@ -40,11 +40,18 @@ class CacheCommand extends ContainerAwareCommand
     
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->out = $output;        
-        
-        $this->write('Test 1');
-        $entities = $this->getContainer()->get('ywc_common.remote_entity_manager')->clearCache(3);
-        foreach($entities as $entity) $this->write($entity);
+        $this->out = $output;
+        $limit = new \DateTime();
+        $limit->setTimestamp($limit->getTimestamp() - (int)$input->getOption('delay'));
+        $action = $input->getArgument('action');
+        call_user_func_array(array($this, $action.'Action'), array($limit));
+    }
+
+    private function clearAction(\DateTime $limit)
+    {
+        $this->write('Clearing all cache entry prior to : '.$limit->format(\DateTime::RSS), OutputInterface::VERBOSITY_VERBOSE);
+        $entities = $this->getContainer()->get('ywc_common.remote_entity_manager')->clearCache($limit);
+        $this->write('Cache cleared');
     }
 
 }

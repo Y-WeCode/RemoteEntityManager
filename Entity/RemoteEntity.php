@@ -12,7 +12,7 @@ class RemoteEntity
     /**
      * @var integer
      *
-     * @ORM\Column(name="remoteApi", type="integer")
+     * @ORM\Column(name="remoteId", type="integer")
      */
     protected $remoteId;
 
