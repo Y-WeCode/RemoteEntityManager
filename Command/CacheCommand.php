@@ -35,7 +35,7 @@ class CacheCommand extends ContainerAwareCommand
             ->addOption(
                 'delay',
                 'd',
-                InputOption::OPTIONAL,
+                InputOption::VALUE_OPTIONAL,
                 'Consider only cache entries older than delay (in seconds)',
                 86400
             )
