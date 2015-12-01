@@ -1,25 +1,29 @@
 <?php
 
-namespace YWC\RemoteBundle\Utils;
+namespace YWC\RemoteBundle\Repository;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\EntityManager;
 
 class Repository
 {
-    $className;
+    private $className;
 
-    $em;
+    private $em;
 
-    $api;
+    private $api;
 
-    $repository;    
+    private $repository;    
 
     public function __construct(EntityManager $em, $api, $className)
     {
         $reader = new AnnotationReader();
-        if(!$reader->getClassAnnotation(new \ReflectionClass($className), 'YWC\\RemoteBundle\\Annotations\\Remote')) {
-			throw new Exception(sprintf('Entity class %s does not have required annotation Remote', $className));
+        $class = new \ReflectionClass($className);
+        if(!$reader->getClassAnnotation($class, 'YWC\\RemoteBundle\\Annotation\\Remote')) {
+			throw new \Exception(sprintf('Entity class %s does not have required annotation Remote', $className));
+		}
+        if(!$class->is_subclass_of('YWC\\RemoteBundle\\Entity\\RemoteEntity')) {
+            throw new \Exception(sprintf('Entity class %s does not extend the required mapped superclass RemoteEntity', $className));
 		}
         
         $this->em = $em;
@@ -35,7 +39,9 @@ class Repository
 
     private function getClassNameNoNS()
     {
-        return array_pop(explode('\\', $this->className));
+        $tmp = explode('\\', $this->className);
+        
+        return array_pop($tmp);
     }
 
     private function getUrl($id)
@@ -54,24 +60,27 @@ class Repository
 
     public function load($id)
     {
-        return $this->fromJson(json_decode(file_get_contents($this->getUrl($id))));
+        echo $this->getUrl($id);
+        return $this->fromJson(json_decode(file_get_contents($this->getUrl($id))), $id);
     }
 
-    private function fromJson($json)
+    private function fromJson($json, $id)
     {
         $reader = new AnnotationReader();
         $class = new \ReflectionClass($this->className);
         $entity = $class->newInstanceWithoutConstructor();
 
-        $classname = $this->getClassNameNoNS();
-        foreach($json->$class as $key => $val) {
-            if($entity->hasMethod('set'.ucfirst($key))) {
+        $entity->setId($id);
+
+        $className = $this->getClassNameNoNS();
+        foreach($json->$className as $key => $val) {
+            if($class->hasMethod('set'.ucfirst($key))) {
                 call_user_func_array(array($entity, 'set'.ucfirst($key)), array($val));
             }
         }
 
-        $em->persist($entity);
-        $me->flush();
+        $this->em->persist($entity);
+        $this->em->flush();
 
         return $entity;
     }
