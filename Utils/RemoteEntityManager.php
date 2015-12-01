@@ -4,6 +4,7 @@ namespace YWC\RemoteBundle\Utils;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\EntityManager;
+use YWC\RemoteBundle\Repository\Repository;
 
 class RemoteEntityManager
 {

@@ -22,7 +22,7 @@ class Repository
         if(!$reader->getClassAnnotation($class, 'YWC\\RemoteBundle\\Annotation\\Remote')) {
 			throw new \Exception(sprintf('Entity class %s does not have required annotation Remote', $className));
 		}
-        if(!$class->is_subclass_of('YWC\\RemoteBundle\\Entity\\RemoteEntity')) {
+        if(!$class->isSubclassOf('YWC\\RemoteBundle\\Entity\\RemoteEntity')) {
             throw new \Exception(sprintf('Entity class %s does not extend the required mapped superclass RemoteEntity', $className));
 		}
         
@@ -51,7 +51,9 @@ class Repository
 
     public function find($id)
     {
-        $cache = $this->repository->find($id);
+        if(is_null($id)) return null;
+        
+        $cache = $this->repository->findOneBy(array('remoteId' => $id, 'remoteApi' => $this->api));
         
         if(!is_null($cache)) return $cache;
 
@@ -60,7 +62,6 @@ class Repository
 
     public function load($id)
     {
-        echo $this->getUrl($id);
         return $this->fromJson(json_decode(file_get_contents($this->getUrl($id))), $id);
     }
 
@@ -70,7 +71,9 @@ class Repository
         $class = new \ReflectionClass($this->className);
         $entity = $class->newInstanceWithoutConstructor();
 
-        $entity->setId($id);
+        $entity->setRemoteId($id);
+        $entity->setRemoteApi($this->api);
+        $entity->setRemoteSync(new \DateTime());
 
         $className = $this->getClassNameNoNS();
         foreach($json->$className as $key => $val) {

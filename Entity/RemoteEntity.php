@@ -30,6 +30,8 @@ class RemoteEntity
      */
     protected $remoteSync;
 
+    private $attachedRemotes;
+
     public function getRemoteId()
     {
         return $this->remoteId;
@@ -65,4 +67,32 @@ class RemoteEntity
 
         return $this;
     }
+
+    /*
+    public function __call($name, $args)
+    {
+        if(strpos($name, 'getRemote') !== 0) trigger_error('Call to undefined method '.__CLASS__.'::'.$name.'()', E_USER_ERROR);
+
+        if(is_null($attachedRemote)) trigger_error('The remote attributes have not been attached by the manager', E_USER_ERROR);
+        
+        $attr = lcfirst(substr($name, 9));
+        $class = new \ReflectionClass(__CLASS__);
+        if(!$class->hasProperty($attr)) trigger_error('Class has not attribute '.__CLASS__.'::'.$attr, E_USER_ERROR);
+        
+        $prop = new \ReflectionProperty(__CLASS__, $attr);
+        $reader = new AnnotationReader();
+        $remote = $reader->getPropertyAnnotation($reflectionProp, 'YWC\\RemoteBundle\\Annotation\\Remote');
+        if(!$remote) trigger_error('Class attribute '.__CLASS__.'::'.$attr.' has not the @Remote annotation', E_USER_ERROR);
+
+        return $this->attachedRemotes[$attr];
+    }
+
+    public function attachRemotes(array $remotes)
+    {
+        $this->attachedRemotes = $remotes;
+
+        return $this;
+    }
+    */
+
 }
