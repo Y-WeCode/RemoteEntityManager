@@ -22,4 +22,10 @@ class RemoteEntityManager
         
         return new Repository($this->em, $api, $className);
     }
+
+    public function clearCache($delay)
+    {
+        $entities = $this->em->getConfiguration()->getMetadataDriverImpl()->getAllClassNames();
+        return $entities;
+    }
 }
