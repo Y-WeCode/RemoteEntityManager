@@ -1,15 +1,13 @@
 <?php
 
-namespace YWC\API\MatchingAPIBundle\Command;
+namespace YWC\RemoteBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use YWC\API\MatchingAPIBundle\Entity\Mail;
-use YWC\API\MatchingAPIBundle\Entity\Matching;
 
-class MailerCommand extends ContainerAwareCommand
+class CacheCommand extends ContainerAwareCommand
 {
 
     private $out;
