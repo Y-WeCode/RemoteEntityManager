@@ -46,4 +46,28 @@ class RemoteEntityManager
             ;
         }        
     }
+
+    public function attach($entity, $api = null)
+    {
+        $reader = new AnnotationReader();
+        $class = new \ReflectionClass($entity);
+        foreach($class->getProperties() as $property) {
+            if($relation = $reader->getPropertyAnnotation($property, 'YWC\\RemoteBundle\\Annotation\\RemoteRelation')) {
+                $id = call_user_func_array(array($entity, 'get'.ucfirst($property->getName())), array());
+                call_user_func_array(array($entity, 'set'.ucfirst($property->getName())), array($this->getRepository($relation->className, $api)->find($id)));
+            }
+        }
+    }
+
+    public function detach($entity)
+    {
+        $reader = new AnnotationReader();
+        $class = new \ReflectionClass($entity);
+        foreach($class->getProperties() as $property) {
+            if($relation = $reader->getPropertyAnnotation($property, 'YWC\\RemoteBundle\\Annotation\\RemoteRelation')) {
+                $attachedEntity = call_user_func_array(array($entity, 'get'.ucfirst($property->getName())), array());
+                call_user_func_array(array($entity, 'set'.ucfirst($property->getName())), array($attachedEntity->getRemoteId()));
+            }
+        }
+    }
 }
